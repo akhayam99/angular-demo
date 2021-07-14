@@ -1,4 +1,4 @@
-<div class="container pt-3 text-center">
+<!-- <div class="container pt-3 text-center">
   <div class="row">
     <ng-container *ngFor="let month of months">
       <div class="col-lg-1 border">
@@ -19,6 +19,44 @@
         <div class="w-100 inter-active">
         </div>
       </div>
+    </ng-container>
+  </div>
+</div> -->
+
+
+
+<div class="container pt-3 text-center">
+  <div class="row">
+    <ng-container *ngIf="dataJson$ | async as infos">
+      <ng-container *ngFor="let info of infos | keyvalue">
+        <ng-container *ngIf="info.key == 'mesi'">
+          {{ setMaxValue(info.value) }}
+          <ng-container *ngFor="let item of info.value; let i = index">
+            <div class="col-lg-1 border">
+
+              <div class="w-100 inter-title border-bottom">
+                {{ months[i] }}
+              </div>
+
+              <div [id]="months[i]" class="w-100 inter-body">
+                {{ setBackground(months[i], item["importo"]) }}
+                <div class="inter-body-content">
+                  <span class="inter-body-document">
+                    {{ item["documenti"] }} doc.
+                  </span>
+                  <div class="inter-break"></div>
+                  <span class="inter-body-total">
+                    {{ item["importo"] }} €
+                  </span>
+                </div>
+              </div>
+
+              <div class="w-100 inter-active"></div>
+            </div>
+
+          </ng-container>
+        </ng-container>
+      </ng-container>
     </ng-container>
   </div>
 </div>
