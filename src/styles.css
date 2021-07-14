@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.inter-title {
+    color: #0373fc;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.inter-body {
+    background: linear-gradient(0deg, #D4EFDF 90%, white 10%);
+    height: 80px;
+}
+
+.inter-body-content {
+    bottom: 5px;
+    left: 5px;
+    position: absolute;
+    text-align: left;
+}
+
+.inter-body-document {
+    color: grey;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.inter-body-total {
+    color: #1E8449;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.inter-break {
+    margin: -10px;
+    width: 100%;
+}
+
+.inter-active {
+    background-color: #0373fc;
+    height: 2px;
+}
+
+.col-lg-1 {
+    margin: unset;
+    padding: unset;
+ }
