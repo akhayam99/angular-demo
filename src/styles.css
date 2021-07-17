@@ -43,7 +43,28 @@ body {
     height: 2px;
 }
 
+.inter-inactive {
+    background-color: lightgrey;
+    height: 2px;
+}
+
+.inter-summary {
+    color: #0373fc;
+    font-size: 13px;
+    font-weight: 600;
+}
+
 .col-lg-1 {
     margin: unset;
     padding: unset;
+ }
+
+ .no-selection {
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently */
  }

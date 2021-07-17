@@ -1,38 +1,12 @@
-<!-- <div class="container pt-3 text-center">
-  <div class="row">
-    <ng-container *ngFor="let month of months">
-      <div class="col-lg-1 border">
-        <div class="w-100 inter-title border-bottom">
-          {{ month }}
-        </div>
-        <div class="w-100 inter-body">
-          <div class="inter-body-content">
-            <span class="inter-body-document">
-              4 doc.
-            </span>
-            <div class="inter-break"></div>
-            <span class="inter-body-total">
-              15.000 €
-            </span>
-          </div>
-        </div>
-        <div class="w-100 inter-active">
-        </div>
-      </div>
-    </ng-container>
-  </div>
-</div> -->
-
-
-
-<div class="container pt-3 text-center">
-  <div class="row">
+<div class="container pt-3 text-center no-selection">
+  <div class="row" (mouseup)="stopActive()">
     <ng-container *ngIf="dataJson$ | async as infos">
       <ng-container *ngFor="let info of infos | keyvalue">
         <ng-container *ngIf="info.key == 'mesi'">
           {{ setMaxValue(info.value) }}
           <ng-container *ngFor="let item of info.value; let i = index">
-            <div class="col-lg-1 border">
+            <div class="col-lg-1 border" (mousedown)="startActive(months[i], item['documenti'], item['importo'])"
+              (mouseover)="setActive(months[i], item['documenti'], item['importo'])">
 
               <div class="w-100 inter-title border-bottom">
                 {{ months[i] }}
@@ -46,17 +20,29 @@
                   </span>
                   <div class="inter-break"></div>
                   <span class="inter-body-total">
-                    {{ item["importo"] }} €
+                    {{ getPrice(item["importo"]) }}
                   </span>
                 </div>
               </div>
 
-              <div class="w-100 inter-active"></div>
+              <div [ngClass]="activeMonths.includes(months[i]) ? 'inter-active' : 'inter-inactive'" class="w-100"></div>
             </div>
 
           </ng-container>
         </ng-container>
       </ng-container>
     </ng-container>
+
+    <div class="col-12 text-left pl-0">
+      <span class="inter-summary">
+        Totale documenti: <span style="color: grey"> {{ totalDocument }} </span>
+      </span>
+      <div class="inter-break"></div>
+      <span class="inter-summary">
+        Totale importo: <span style="color: grey"> {{ getPrice(totalAmount) }} </span>
+      </span>
+
+    </div>
+
   </div>
 </div>
