@@ -72,6 +72,9 @@ export class AppComponent implements AfterViewInit {
     if (!this.selectActive)
       return;
 
+    if (this.activeMonths.includes(month))
+      return;
+
     this.activeMonths.push(month);
     this.totalAmount += parseInt(amount);
     this.totalDocument += parseInt(document);
