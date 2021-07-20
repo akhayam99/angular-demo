@@ -35,6 +35,7 @@ export class AppComponent implements AfterViewInit {
     "Dicembre"
   ];
   monthsIndex: number = 0;
+  onMonthsSelection: boolean = false;
   selectActive: boolean = false;
   totalAmount: number = 0;
   totalDocument: number = 0;
@@ -43,6 +44,7 @@ export class AppComponent implements AfterViewInit {
     window.addEventListener('mouseup', e => {
       this.clickCommand = false;
       this.selectActive = false;
+      this.onMonthsSelection = false;
     });
 
     window.addEventListener('mousedown', e => {
@@ -84,6 +86,7 @@ export class AppComponent implements AfterViewInit {
       return this.removeFromActiveMonths(month, amount, document);
     }
 
+    this.onMonthsSelection = true;
     this.selectActive = true;
     this.activeMonths = [month];
     this.totalAmount = parseInt(amount);

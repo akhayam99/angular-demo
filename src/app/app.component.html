@@ -39,7 +39,7 @@
           Selezionare/Deselezionare uno specifico mese premendo CTRL
         </span>
       </ng-container>
-      <ng-container *ngIf="selectActive && !ctrlCommand">
+      <ng-container *ngIf="selectActive && !ctrlCommand && onMonthsSelection">
         <span class="inter-info">
           Trascinare il mouse per selezionare più mesi
         </span>
