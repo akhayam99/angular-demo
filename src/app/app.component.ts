@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ServiceNameService } from './http-error.service';
@@ -13,9 +13,11 @@ export class AppComponent implements AfterViewInit {
   activeMonths: string[] = [];
   dataJson$!: Observable<any[]>;
   dataUrl: string = "http://staccah.fattureincloud.it/testfrontend/data.json";
+  formatter: Intl.NumberFormat = Intl.NumberFormat('it-IT', {
+    style: 'currency',
+    currency: 'EUR',
+  });
   maxValue: number = 0;
-  monthsIndex: number = 0;
-  selectActive: boolean = false;
   months: string[] = [
     "Gennaio",
     "Febbraio",
@@ -30,16 +32,17 @@ export class AppComponent implements AfterViewInit {
     "Novembre",
     "Dicembre"
   ];
+  monthsIndex: number = 0;
+  selectActive: boolean = false;
   totalAmount: number = 0;
   totalDocument: number = 0;
 
-  formatter: Intl.NumberFormat = Intl.NumberFormat('it-IT', {
-    style: 'currency',
-    currency: 'EUR',
-  });
-
-
-  constructor(private httpClient: HttpClient, public serviceNameService: ServiceNameService) { }
+  constructor(private httpClient: HttpClient, public serviceNameService: ServiceNameService) {
+    window.addEventListener('mouseup', e => {
+      if (!e.ctrlKey)
+        this.selectActive = false;
+    });
+  }
 
   ngAfterViewInit(): void {
     this.dataJson$ = this.httpClient.get<any[]>(this.dataUrl);
@@ -57,24 +60,52 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
-  public startActive(month: string, document: string, amount: string) {
+  public startActive(month: string, document: string, amount: string, event: MouseEvent) {
+    if (event.ctrlKey)
+      return this.addToActiveMonths(month, amount, document);
+
     this.selectActive = true;
     this.activeMonths = [month];
     this.totalAmount = parseInt(amount);
     this.totalDocument = parseInt(document);
   }
 
-  public stopActive() {
-    this.selectActive = false;
-  }
-
-  public setActive(month: string, document: string, amount: string) {
+  public setActive(month: string, document: string, amount: string, event: MouseEvent) {
     if (!this.selectActive)
       return;
 
     if (this.activeMonths.includes(month))
       return;
+    
+    if (event.ctrlKey)
+      return;
 
+    var firstId: number = this.months.indexOf(this.activeMonths[0]);
+    var activeId: number = this.months.indexOf(month);
+
+    if (firstId < activeId)
+      return this.checkRightSide(firstId, activeId, amount, document);
+
+    this.checkLeftSide(firstId, activeId, amount, document)
+  }
+
+  private checkRightSide(firstId: number, activeId: number, amount: string, document: string) {
+    while (firstId <= activeId) {
+      if (!this.activeMonths.includes(this.months[firstId]))
+        this.addToActiveMonths(this.months[firstId], amount, document);
+      firstId++;
+    }
+  }
+
+  private checkLeftSide(firstId: number, activeId: number, amount: string, document: string) {
+    while (firstId >= activeId) {
+      if (!this.activeMonths.includes(this.months[firstId]))
+        this.addToActiveMonths(this.months[firstId], amount, document);
+      firstId--;
+    }
+  }
+
+  private addToActiveMonths(month: string, amount: string, document: string) {
     this.activeMonths.push(month);
     this.totalAmount += parseInt(amount);
     this.totalDocument += parseInt(document);

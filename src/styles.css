@@ -54,6 +54,13 @@ body {
     font-weight: 600;
 }
 
+.inter-info {
+    color: black;
+    font-size: 12px;
+    font-weight: 300;
+    font-style: italic;
+}
+
 .col-lg-1 {
     margin: unset;
     padding: unset;
