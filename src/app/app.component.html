@@ -5,8 +5,8 @@
         <ng-container *ngIf="info.key == 'mesi'">
           {{ setMaxValue(info.value) }}
           <ng-container *ngFor="let item of info.value; let i = index">
-            <div class="col-lg-1 border" (mousedown)="startActive(months[i], item['documenti'], item['importo'],$event)"
-              (mouseover)="setActive(months[i], item['documenti'], item['importo'], $event)">
+            <div class="col-lg-1 border" (mousedown)="startActive(months[i], item['documenti'], item['importo'])"
+              (mouseover)="setActive(months[i], item['documenti'], item['importo'])">
 
               <div class="w-100 inter-title border-bottom">
                 {{ months[i] }}
@@ -34,7 +34,12 @@
     </ng-container>
 
     <div class="col-12 text-center" style="height: 0px;">
-      <ng-container *ngIf="selectActive">
+      <ng-container *ngIf="ctrlCommand">
+        <span class="inter-info">
+          Selezionare/Deselezionare uno specifico mese premendo CTRL
+        </span>
+      </ng-container>
+      <ng-container *ngIf="selectActive && !ctrlCommand">
         <span class="inter-info">
           Trascinare il mouse per selezionare più mesi
         </span>
