@@ -51,11 +51,13 @@ export class AppComponent implements AfterViewInit {
     });
 
     window.addEventListener('keydown', e => {
-      this.ctrlCommand = true;
+      if (e.ctrlKey)
+        this.ctrlCommand = true;
     })
 
     window.addEventListener('keyup', e => {
-      this.ctrlCommand = false;
+      if (!e.ctrlKey)
+        this.ctrlCommand = false;
     })
   }
 
